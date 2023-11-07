@@ -1,0 +1,72 @@
+---
+title: "ADS-516 Final-Simay Özkan"
+output: html_document
+---
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+install.packages("igraph")
+library(igraph)
+install.packages("readr")
+library(readr)
+install.packages("statnet")
+library(statnet)
+```
+
+
+```{r}
+
+
+#A-)Importing data
+data_1 <- read.csv("https://raw.githubusercontent.com/suatatan/network-analysis-lecture/main/data/02.csv", header = TRUE, encoding = "UTF-8") 
+
+#B1-)
+#Creating network object
+set.seed(6849)
+network_object = as.network(x = data_1,
+                            directed = TRUE, 
+                            loops = FALSE, 
+                            matrix.type = "adjacency")
+
+#To see the plot of network object
+plot(network_object, displaylabels=TRUE)
+
+#B2-)Shortest path of the graph
+set.seed(6849)
+
+graph_simay = graph_from_data_frame(data_1)
+
+plot(graph_simay, vertex.label.cex=0.8, vertex.color="pink")
+
+shortest.paths(graph_simay)
+
+#Also for average path lenght
+average.path.length(graph_simay)
+
+#C-)Computation degree centrality for each node.I have used 2 different codes for this question.First one is shorter than the second one. They give same numbers with different table shapes.
+set.seed(6849)
+
+degree(graph_simay) 
+
+#Also:
+deg = degree(graph_simay)
+x = names(deg)
+y = deg
+ddist = data.frame(x,y)
+ddist
+
+#D-)Converting graph object to dataframe
+data_frame = as_data_frame(graph_simay)
+data_frame
+
+#E-)Exporting this dataframe to excel
+write.csv(data_frame, "C:\\Users\\ogulc\\Desktop\\ADS-516\\Simay_Özkan_ADS-516-FINAL.csv", row.names = FALSE)
+
+```
+
